@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE BODY hello_world# IS
       RETURN varchar2
    AS
    BEGIN
-      RETURN 'Goodbye, Mars!';
+      RETURN 'HELLO_WORLD';
    END hello;
 END hello_world#;
 /
@@ -61,5 +61,21 @@ END ut_hello_world#;
 
 BEGIN
    ut_hello_world#.run;
+END;
+/
+
+CREATE OR REPLACE FUNCTION HELLO_WORLD RETURN VARCHAR2 IS
+BEGIN
+   RETURN 'Hello, World!';
+END HELLO_WORLD;
+/
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+   RESULT VARCHAR2(100);
+BEGIN
+   RESULT := HELLO_WORLD;
+   DBMS_OUTPUT.PUT_LINE(RESULT);
 END;
 /
