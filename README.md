@@ -1,0 +1,1 @@
+sqlplus sys as sysdba@localhost:1521/xepdb1 @binary_to_decimal.sql
