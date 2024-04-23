@@ -1,49 +1,224 @@
-create or replace package ut_raindrops#
-is
-  procedure run;
-end ut_raindrops#;
+CREATE OR REPLACE PACKAGE UT_RAINDROPS# IS
+
+  PROCEDURE RUN;
+END UT_RAINDROPS#;
 /
- 
-create or replace package body ut_raindrops#
-is
-  procedure test (
-    i_descn                                       varchar2
-   ,i_exp                                         varchar2
-   ,i_act                                         varchar2
-  )
-  is
-  begin
-    if i_exp = i_act then
-      dbms_output.put_line('SUCCESS: ' || i_descn);
-    else
-      dbms_output.put_line('FAILURE: ' || i_descn || ' - expected ' || nvl(i_exp, 'null') || ', but received ' || nvl(i_act, 'null'));
-    end if;
-  end test;
- 
-  procedure run
-  is
-  begin
-    test(i_descn => 'test_1'    , i_exp => '1'              , i_act => raindrops#.convert(1));
-    test(i_descn => 'test_3'    , i_exp => 'Pling'          , i_act => raindrops#.convert(3));
-    test(i_descn => 'test_5'    , i_exp => 'Plang'          , i_act => raindrops#.convert(5));
-    test(i_descn => 'test_7'    , i_exp => 'Plong'          , i_act => raindrops#.convert(7));
-    test(i_descn => 'test_6'    , i_exp => 'Pling'          , i_act => raindrops#.convert(6));
-    test(i_descn => 'test_9'    , i_exp => 'Pling'          , i_act => raindrops#.convert(9));
-    test(i_descn => 'test_10'   , i_exp => 'Plang'          , i_act => raindrops#.convert(10));
-    test(i_descn => 'test_14'   , i_exp => 'Plong'          , i_act => raindrops#.convert(14));
-    test(i_descn => 'test_15'   , i_exp => 'PlingPlang'     , i_act => raindrops#.convert(15));
-    test(i_descn => 'test_21'   , i_exp => 'PlingPlong'     , i_act => raindrops#.convert(21));
-    test(i_descn => 'test_25'   , i_exp => 'Plang'          , i_act => raindrops#.convert(25));
-    test(i_descn => 'test_35'   , i_exp => 'PlangPlong'     , i_act => raindrops#.convert(35));
-    test(i_descn => 'test_49'   , i_exp => 'Plong'          , i_act => raindrops#.convert(49));
-    test(i_descn => 'test_52'   , i_exp => '52'             , i_act => raindrops#.convert(52));
-    test(i_descn => 'test_105'  , i_exp => 'PlingPlangPlong', i_act => raindrops#.convert(105));
-    test(i_descn => 'test_12121', i_exp => '12121'          , i_act => raindrops#.convert(12121));
-  end run;
-end ut_raindrops#;
+
+CREATE OR REPLACE PACKAGE BODY UT_RAINDROPS# IS
+
+  PROCEDURE TEST (
+    I_DESCN VARCHAR2,
+    I_EXP VARCHAR2,
+    I_ACT VARCHAR2
+  ) IS
+  BEGIN
+    IF I_EXP = I_ACT THEN
+      DBMS_OUTPUT.PUT_LINE('SUCCESS: '
+                           || I_DESCN);
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('FAILURE: '
+                           || I_DESCN
+                           || ' - expected '
+                           || NVL(I_EXP, 'null')
+                              || ', but received '
+                              || NVL(I_ACT, 'null'));
+    END IF;
+  END TEST;
+
+  PROCEDURE RUN IS
+  BEGIN
+    TEST(
+      I_DESCN => 'test_1',
+      I_EXP => '1',
+      I_ACT => RAINDROPS.CONVERT(1)
+    );
+    TEST(
+      I_DESCN => 'test_3',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(3)
+    );
+    TEST(
+      I_DESCN => 'test_5',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(5)
+    );
+    TEST(
+      I_DESCN => 'test_7',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(7)
+    );
+    TEST(
+      I_DESCN => 'test_6',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(6)
+    );
+    TEST(
+      I_DESCN => 'test_9',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(9)
+    );
+    TEST(
+      I_DESCN => 'test_10',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(10)
+    );
+    TEST(
+      I_DESCN => 'test_14',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(14)
+    );
+    TEST(
+      I_DESCN => 'test_15',
+      I_EXP => 'PlingPlang',
+      I_ACT => RAINDROPS.CONVERT(15)
+    );
+    TEST(
+      I_DESCN => 'test_21',
+      I_EXP => 'PlingPlong',
+      I_ACT => RAINDROPS.CONVERT(21)
+    );
+    TEST(
+      I_DESCN => 'test_25',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(25)
+    );
+    TEST(
+      I_DESCN => 'test_35',
+      I_EXP => 'PlangPlong',
+      I_ACT => RAINDROPS.CONVERT(35)
+    );
+    TEST(
+      I_DESCN => 'test_49',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(49)
+    );
+    TEST(
+      I_DESCN => 'test_52',
+      I_EXP => '52',
+      I_ACT => RAINDROPS.CONVERT(52)
+    );
+    TEST(
+      I_DESCN => 'test_105',
+      I_EXP => 'PlingPlangPlong',
+      I_ACT => RAINDROPS.CONVERT(105)
+    );
+    TEST(
+      I_DESCN => 'test_12121',
+      I_EXP => '12121',
+      I_ACT => RAINDROPS.CONVERT(12121)
+    );
+  END RUN;
+END UT_RAINDROPS#;
 /
- 
-begin
-  ut_raindrops#.run;
-end;
+
+CREATE OR REPLACE PACKAGE BODY UT_RAINDROPS# IS
+
+  PROCEDURE TEST (
+    I_DESCN VARCHAR2,
+    I_EXP VARCHAR2,
+    I_ACT VARCHAR2
+  ) IS
+  BEGIN
+    IF I_EXP = I_ACT THEN
+      DBMS_OUTPUT.PUT_LINE('SUCCESS: '
+                           || I_DESCN);
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('FAILURE: '
+                           || I_DESCN
+                           || ' - expected '
+                           || NVL(I_EXP, 'null')
+                              || ', but received '
+                              || NVL(I_ACT, 'null'));
+    END IF;
+  END TEST;
+
+  PROCEDURE RUN IS
+  BEGIN
+    TEST(
+      I_DESCN => 'test_1',
+      I_EXP => '1',
+      I_ACT => RAINDROPS.CONVERT(1)
+    );
+    TEST(
+      I_DESCN => 'test_3',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(3)
+    );
+    TEST(
+      I_DESCN => 'test_5',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(5)
+    );
+    TEST(
+      I_DESCN => 'test_7',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(7)
+    );
+    TEST(
+      I_DESCN => 'test_6',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(6)
+    );
+    TEST(
+      I_DESCN => 'test_9',
+      I_EXP => 'Pling',
+      I_ACT => RAINDROPS.CONVERT(9)
+    );
+    TEST(
+      I_DESCN => 'test_10',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(10)
+    );
+    TEST(
+      I_DESCN => 'test_14',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(14)
+    );
+    TEST(
+      I_DESCN => 'test_15',
+      I_EXP => 'PlingPlang',
+      I_ACT => RAINDROPS.CONVERT(15)
+    );
+    TEST(
+      I_DESCN => 'test_21',
+      I_EXP => 'PlingPlong',
+      I_ACT => RAINDROPS.CONVERT(21)
+    );
+    TEST(
+      I_DESCN => 'test_25',
+      I_EXP => 'Plang',
+      I_ACT => RAINDROPS.CONVERT(25)
+    );
+    TEST(
+      I_DESCN => 'test_35',
+      I_EXP => 'PlangPlong',
+      I_ACT => RAINDROPS.CONVERT(35)
+    );
+    TEST(
+      I_DESCN => 'test_49',
+      I_EXP => 'Plong',
+      I_ACT => RAINDROPS.CONVERT(49)
+    );
+    TEST(
+      I_DESCN => 'test_52',
+      I_EXP => '52',
+      I_ACT => RAINDROPS.CONVERT(52)
+    );
+    TEST(
+      I_DESCN => 'test_105',
+      I_EXP => 'PlingPlangPlong',
+      I_ACT => RAINDROPS.CONVERT(105)
+    );
+    TEST(
+      I_DESCN => 'test_12121',
+      I_EXP => '12121',
+      I_ACT => RAINDROPS.CONVERT(12121)
+    );
+  END RUN;
+END UT_RAINDROPS#;
+/
+
+BEGIN
+  UT_RAINDROPS#.RUN;
+END;
 /
