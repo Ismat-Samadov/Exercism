@@ -1,39 +1,63 @@
-create or replace package ut_gigasecond#
-is
-  procedure run;
-end ut_gigasecond#;
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE FUNCTION ADD_GIGASECOND(
+  INPUT_DATE IN DATE
+) RETURN DATE IS
+  V_INPUT_TIMESTAMP      TIMESTAMP;
+  V_GIGASECOND_INTERVAL  INTERVAL DAY(9) TO SECOND;
+  V_GIGASECOND_TIMESTAMP TIMESTAMP;
+  V_RESULT_DATE          DATE;
+BEGIN
+ -- Convert input date to timestamp
+  V_INPUT_TIMESTAMP := TO_TIMESTAMP(INPUT_DATE);
+ -- Add one gigasecond
+  V_GIGASECOND_INTERVAL := NUMTODSINTERVAL(1000000000, 'SECOND');
+  V_GIGASECOND_TIMESTAMP := V_INPUT_TIMESTAMP + V_GIGASECOND_INTERVAL;
+ -- Convert timestamp back to date
+  V_RESULT_DATE := TO_DATE(V_GIGASECOND_TIMESTAMP);
+ -- Return the computed date
+  RETURN V_RESULT_DATE;
+END;
 /
- 
-create or replace package body ut_gigasecond#
-is
-  procedure test (
-    i_descn                                       varchar2
-   ,i_exp                                         date
-   ,i_act                                         date
-  )
-  is
-  begin
-    if i_exp = i_act then
-      dbms_output.put_line('SUCCESS: ' || i_descn);
-    else
-      dbms_output.put_line('FAILURE: ' || i_descn || ' - expected ' || nvl('' || i_exp, 'null') || ', but received ' || nvl('' || i_act, 'null'));
-    end if;
-  end test;
- 
-  procedure run
-  is
-  begin
-    test(i_descn => 'test_1', i_exp => to_date('2043-01-01', 'YYYY-MM-DD'), i_act => gigasecond#.since(to_date('2011-04-25', 'YYYY-MM-DD')));
-    test(i_descn => 'test_2', i_exp => to_date('2009-02-19', 'YYYY-MM-DD'), i_act => gigasecond#.since(to_date('1977-06-13', 'YYYY-MM-DD')));
-    test(i_descn => 'test_3', i_exp => to_date('1991-03-27', 'YYYY-MM-DD'), i_act => gigasecond#.since(to_date('1959-07-19', 'YYYY-MM-DD')));
-    test(i_descn => 'test_time_with_seconds', i_exp => to_date('1991-03-28', 'YYYY-MM-DD'), i_act => gigasecond#.since(to_date('1959-07-19 23:59:59', 'YYYY-MM-DD HH24:Mi:SS')));
-    ---- modify the test to test your 1 Gs anniversary
-    --test(i_descn => 'test_yourself', i_exp => to_date('AAAA-BB-CC', 'YYYY-MM-DD'), i_act => gigasecond#.since(to_date('XXXX-YY-ZZ', 'YYYY-MM-DD')));
-  end run;
-end ut_gigasecond#;
+
+CREATE OR REPLACE PACKAGE UT_GIGASECOND# IS
+
+  PROCEDURE RUN;
+END UT_GIGASECOND#;
 /
- 
-begin
-  ut_gigasecond#.run;
-end;
+
+CREATE OR REPLACE PACKAGE BODY UT_GIGASECOND# IS
+
+  PROCEDURE TEST (
+    I_DESCN VARCHAR2,
+    I_EXP DATE,
+    I_ACT DATE
+  ) IS
+  BEGIN
+    IF I_EXP = I_ACT THEN
+      DBMS_OUTPUT.PUT_LINE('SUCCESS: '
+                           || I_DESCN);
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('FAILURE: '
+                           || I_DESCN
+                           || ' - expected '
+                           || NVL(TO_CHAR(I_EXP), 'null')
+                              || ', but received '
+                              || NVL(TO_CHAR(I_ACT), 'null'));
+    END IF;
+  END TEST;
+
+  PROCEDURE RUN IS
+  BEGIN
+    UT_GIGASECOND#.TEST( I_DESCN => 'test_1', I_EXP => TO_DATE('2043-01-01', 'YYYY-MM-DD'), I_ACT => ADD_GIGASECOND(TO_DATE('2011-04-25', 'YYYY-MM-DD')) );
+    UT_GIGASECOND#.TEST( I_DESCN => 'test_2', I_EXP => TO_DATE('2009-02-19', 'YYYY-MM-DD'), I_ACT => ADD_GIGASECOND(TO_DATE('1977-06-13', 'YYYY-MM-DD')) );
+    UT_GIGASECOND#.TEST( I_DESCN => 'test_3', I_EXP => TO_DATE('1991-03-27', 'YYYY-MM-DD'), I_ACT => ADD_GIGASECOND(TO_DATE('1959-07-19', 'YYYY-MM-DD')) );
+    UT_GIGASECOND#.TEST( I_DESCN => 'test_time_with_seconds', I_EXP => TO_DATE('1991-03-28', 'YYYY-MM-DD'), I_ACT => ADD_GIGASECOND(TO_DATE('1959-07-19 23:59:59', 'YYYY-MM-DD HH24:MI:SS')) );
+  END RUN;
+END UT_GIGASECOND#;
+/
+
+BEGIN
+  UT_GIGASECOND#.RUN;
+END;
 /
