@@ -10,7 +10,6 @@ In this repository, you'll find directories organized by programming language. E
 
 - `plsql/`: Solutions for exercises in PL/SQL track.
 
-
 Each language directory contains subdirectories named after specific exercises or tracks. Within these subdirectories, you'll find my solutions to the corresponding problems.
 
 ## Getting Started
@@ -32,6 +31,8 @@ If you find any issues with my solutions or have suggestions for improvements, f
 ## About Me
 
 I'm a passionate programmer interested in improving my coding skills. Exercism is a great platform for honing my abilities and learning new programming languages.
+
+You can also check out my [Exercism profile](https://exercism.org/profiles/Ismat-Samadov) to see more of my solutions and progress.
 
 ## Acknowledgments
 
