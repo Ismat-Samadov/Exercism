@@ -1,6 +1,3 @@
-Sure, here's a sample README file for your GitHub repository:
-
-```
 # Exercism Solutions
 
 This repository contains my solutions to coding exercises from Exercism.io. Exercism is a platform that offers practice problems and coding challenges in various programming languages.
@@ -12,9 +9,7 @@ In this repository, you'll find directories organized by programming language. E
 ## Directory Structure
 
 - `plsql/`: Solutions for exercises in PL/SQL track.
-- `python/`: Solutions for exercises in Python track.
-- `java/`: Solutions for exercises in Java track.
-- `...` (add more directories as needed)
+
 
 Each language directory contains subdirectories named after specific exercises or tracks. Within these subdirectories, you'll find my solutions to the corresponding problems.
 
@@ -41,7 +36,3 @@ I'm a passionate programmer interested in improving my coding skills. Exercism i
 ## Acknowledgments
 
 Thanks to Exercism for providing such a valuable resource for practicing coding skills.
-
-```
-
-Feel free to customize this README to better fit your preferences and the contents of your repository. Let me know if you need further assistance!
